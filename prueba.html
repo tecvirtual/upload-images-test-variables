@@ -1,0 +1,45 @@
+<html>
+
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.2/dropzone.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.2/dropzone.css">
+</head>
+
+<body>
+    <div class="dropzone" id="myDropzone"></div>
+    <button id="startUpload">Start Upload</button>
+
+
+    <script>
+Dropzone.autoDiscover = false;
+        var myDropzone = new Dropzone("#myDropzone", {
+            url: "http://localhost:9098/planner/api/deliverable/create", 
+            //url: "http://localhost:9098/pruebacors",
+            //url: "http://localhost:9098/upload",
+            parallelUploads: 16,
+            maxFiles: 16,
+            /*acceptedFiles: "image/*",*/
+            addRemoveLinks: true,
+            dictDefaultMessage: "Arrastre o haga clic aquí para subir archivos",
+            paramName: "uploaded_file", // The name that will be used to transfer the file
+            params: {
+                type_name: "ID",
+                client_id: "63b5fecacd49b75e2895542e"
+            },
+            headers: {
+                "x-csrf-token": "CSRF_TOKEN"
+            },
+            autoProcessQueue: false
+        });
+
+        myDropzone.on("success", function (file, response) {
+            console.log(response);
+        });
+
+        document.getElementById("startUpload").addEventListener("click", function () {
+            myDropzone.processQueue();
+        });
+    </script>
+</body>
+
+</html>
